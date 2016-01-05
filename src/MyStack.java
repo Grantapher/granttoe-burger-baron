@@ -36,6 +36,19 @@ public class MyStack<T> {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
+        sb.append('[');
+
+        MyStack<T> holdingStack = new MyStack<>();
+        while (!isEmpty()) {
+            T current = pop();
+            sb.append(current.toString()).append(", ");
+            holdingStack.push(current);
+        }
+
+        while (!holdingStack.isEmpty()) push(holdingStack.pop());
+
+        sb.replace(sb.length() - 2, sb.length(), "");
+        sb.append(']');
 
         return sb.toString();
     }
