@@ -14,6 +14,9 @@ public class Burger {
     }
 
     private static MyStack<String> getBaronBurger(int pattyCount, String pattyType) {
+        if (pattyCount < 1 || pattyCount > 3) {
+            throw new IllegalArgumentException("You can only have between 1 and 3 patties, silly!");
+        }
         MyStack<String> baron = new MyStack<>();
         baron.push("Bun");
         baron.push("Ketchup");
@@ -42,8 +45,10 @@ public class Burger {
     }
 
     //go through ingredients until all patties are found and changed
-    public void changePatties(String pattyType) {
-        if (myPattyType.equals(pattyType)) return;
+    public void changePatties(String newPattyType) {
+        //return if the patties aren't actually changing
+        if (myPattyType.equals(newPattyType)) return;
+
         MyStack<String> holdingStack = new MyStack<>();
         int pattiesLeft = myPattyCount;
 
@@ -51,7 +56,7 @@ public class Burger {
         while (pattiesLeft > 0) {
             String current = myStack.pop();
             if (myPattyType.equals(current)) {
-                current = pattyType;
+                current = newPattyType;
                 pattiesLeft--;
             }
             holdingStack.push(current);
@@ -62,13 +67,16 @@ public class Burger {
             myStack.push(holdingStack.pop());
         }
 
-        //change myPattyType to new patty
-        myPattyType = pattyType;
+        //change myPattyType to new patty type
+        myPattyType = newPattyType;
     }
 
     //add the new patty where you first find cheese or a patty
     public void addPatty() {
-        if (3 == myPattyCount) return;
+        if (3 == myPattyCount) {
+            throw new IllegalArgumentException("You can't have more than 3 patties, silly!");
+        }
+
         MyStack<String> holdingStack = new MyStack<>();
 
         //add the patty when you find a patty or cheese
@@ -91,7 +99,10 @@ public class Burger {
     }
 
     public void removePatty() {
-        if (1 == myPattyCount) return;
+        if (1 == myPattyCount) {
+            throw new IllegalArgumentException("You can't have no patties, silly!");
+        }
+
         MyStack<String> holdingStack = new MyStack<>();
 
         //find the patty

@@ -30,7 +30,7 @@ public class MyStack<T> {
     }
 
     public boolean isEmpty() {
-        return count == 0;
+        return size() == 0;
     }
 
     @Override
@@ -38,18 +38,14 @@ public class MyStack<T> {
         StringBuilder sb = new StringBuilder();
         sb.append('[');
 
-        MyStack<T> holdingStack = new MyStack<>();
-        while (!isEmpty()) {
-            T current = pop();
-            sb.append(current.toString()).append(", ");
-            holdingStack.push(current);
+        //iterate through stack
+        for (Node<T> current = head; current != null; current = current.getNext()) {
+            sb.append(current).append(", ");
         }
 
-        while (!holdingStack.isEmpty()) push(holdingStack.pop());
-
+        //remove last comma and space
         sb.replace(sb.length() - 2, sb.length(), "");
         sb.append(']');
-
         return sb.toString();
     }
 
@@ -71,6 +67,11 @@ public class MyStack<T> {
 
         private E getData() {
             return data;
+        }
+
+        @Override
+        public String toString() {
+            return data.toString();
         }
     }
 
