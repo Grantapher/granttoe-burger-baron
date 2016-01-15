@@ -1,3 +1,7 @@
+/*
+ * Grant Toepfer - TCSS 342
+ */
+
 public class MyStack<T> {
     private Node<T> head;
     private int count;
@@ -15,6 +19,7 @@ public class MyStack<T> {
     }
 
     public T pop() {
+        if (isEmpty()) throw new StackUnderflowException();
         --count;
         Node<T> deadNode = head;
         head = head.getNext();
@@ -75,4 +80,9 @@ public class MyStack<T> {
         }
     }
 
+    private static class StackUnderflowException extends RuntimeException {
+        public StackUnderflowException() {
+            super();
+        }
+    }
 }

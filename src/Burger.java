@@ -1,3 +1,7 @@
+/*
+ * Grant Toepfer - TCSS 342
+ */
+
 public class Burger {
     private final static String DEFAULT_PATTY_TYPE = "Beef";
     private static final int DEFAULT_PATTY_COUNT = 1;
@@ -123,67 +127,84 @@ public class Burger {
     }
 
     public void addCategory(String category) {
+        MyStack<String> stack = new MyStack<>();
         if ("Cheese".equals(category)) {
-            addIngredient("Cheddar");
-            addIngredient("Mozzarella");
-            addIngredient("Pepperjack");
+            stack.push("Cheddar");
+            stack.push("Mozzarella");
+            stack.push("Pepperjack");
         } else if ("Veggies".equals(category)) {
-            addIngredient("Mushrooms");
-            addIngredient("Onions");
-            addIngredient("Tomato");
-            addIngredient("Lettuce");
-            addIngredient("Pickle");
+            stack.push("Mushrooms");
+            stack.push("Onions");
+            stack.push("Tomato");
+            stack.push("Lettuce");
+            stack.push("Pickle");
         } else if ("Sauce".equals(category)) {
-            addIngredient("Ketchup");
-            addIngredient("Mustard");
-            addIngredient("Baron-Sauce");
-            addIngredient("Mayonnaise");
+            stack.push("Ketchup");
+            stack.push("Mustard");
+            stack.push("Baron-Sauce");
+            stack.push("Mayonnaise");
+        } else {
+            throw new IllegalArgumentException("Category was \"" + category + "\" when it should be one of " +
+                    "\"Cheese\", \"Veggies\", or \"Sauce\".");
         }
+
+        addIngredients(stack);
     }
 
     public void removeCategory(String category) {
+        MyStack<String> stack = new MyStack<>();
         if ("Cheese".equals(category)) {
-            removeIngredient("Pepperjack");
-            removeIngredient("Mozzarella");
-            removeIngredient("Cheddar");
+            stack.push("Cheddar");
+            stack.push("Mozzarella");
+            stack.push("Pepperjack");
         } else if ("Veggies".equals(category)) {
-            removeIngredient("Pickle");
-            removeIngredient("Lettuce");
-            removeIngredient("Tomato");
-            removeIngredient("Onions");
-            removeIngredient("Mushrooms");
+            stack.push("Mushrooms");
+            stack.push("Onions");
+            stack.push("Tomato");
+            stack.push("Lettuce");
+            stack.push("Pickle");
         } else if ("Sauce".equals(category)) {
-            removeIngredient("Mayonnaise");
-            removeIngredient("Baron-Sauce");
-            removeIngredient("Mustard");
-            removeIngredient("Ketchup");
+            stack.push("Ketchup");
+            stack.push("Mustard");
+            stack.push("Baron-Sauce");
+            stack.push("Mayonnaise");
+        } else {
+            throw new IllegalArgumentException("Category was \"" + category + "\" when it should be one of " +
+                    "\"Cheese\", \"Veggies\", or \"Sauce\".");
         }
+
+        removeIngredients(stack);
     }
 
     public void addIngredient(String ingredient) {
+        MyStack<String> stack = new MyStack<>();
+        stack.push(ingredient);
+        addIngredients(stack);
+    }
+
+    //precondition: ingredients are in order they are found in the recipe stack
+    private void addIngredients(MyStack<String> ingredients) {
         MyStack<String> holdingStack = new MyStack<>();
         MyStack<String> recipeStack = getBaronBurger(myPattyCount, myPattyType);
+        String target = ingredients.pop();
+        String source = myStack.pop();
 
-        //find the ingredient location
-        searchLocation:
+        findIngredient:
         {
-            while (!myStack.isEmpty()) {
-                String current = myStack.pop();
-                String recipeIngredient = recipeStack.pop();
-
-                // find the recipe ingredient
-                while (!current.equals(recipeIngredient)) {
-                    // if we find the ingredient we need to add in the recipe stack,
-                    // put the previous ingredient back on and then the new one, then break
-                    if (recipeIngredient.equals(ingredient)) {
-                        myStack.push(current);
-                        myStack.push(ingredient);
-                        break searchLocation;
+            while (!recipeStack.isEmpty()) {
+                String current = recipeStack.pop();
+                if (target.equals(current)) {
+                    //add the ingredient here
+                    holdingStack.push(target);
+                    if (ingredients.isEmpty()) {
+                        holdingStack.push(source);
+                        break findIngredient;
                     }
-                    recipeIngredient = recipeStack.pop();
+                    target = ingredients.pop();
+                } else if (source.equals(current)) {
+                    holdingStack.push(source);
+                    source = myStack.pop();
                 }
-
-                holdingStack.push(current);
             }
         }
 
@@ -194,16 +215,28 @@ public class Burger {
     }
 
     public void removeIngredient(String ingredient) {
+        MyStack<String> stack = new MyStack<>();
+        stack.push(ingredient);
+        removeIngredients(stack);
+    }
+
+    //precondition: ingredients are in order they are found in the recipe stack
+    private void removeIngredients(MyStack<String> ingredients) {
         MyStack<String> holdingStack = new MyStack<>();
+        String target = ingredients.pop();
 
         //find the ingredient
         while (!myStack.isEmpty()) {
             String current = myStack.pop();
-            if (ingredient.equals(current)) {
-                //current ingredient won't be put back on stack if we leave here
-                break;
+            if (target.equals(current)) {
+                //current ingredient won't be put back on stack if we don't push it
+                if (ingredients.isEmpty()) {
+                    break;
+                }
+                target = ingredients.pop();
+            } else {
+                holdingStack.push(current);
             }
-            holdingStack.push(current);
         }
 
         //put the ingredients back on

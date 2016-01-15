@@ -1,3 +1,7 @@
+/*
+ * Grant Toepfer - TCSS 342
+ */
+
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
@@ -7,6 +11,7 @@ public class Main {
     private static String FILE_PATH = "C:\\Users\\Grant\\OneDrive\\School\\WINTER 2016\\TCSS 342\\Assignments\\1 - Burger Baron\\zip\\customer.txt";
 
     public static void main(String[] args) throws FileNotFoundException {
+        testBurger();
         try (Scanner in = new Scanner(new FileInputStream(FILE_PATH))) {
             int count = 0;
             while (in.hasNextLine()) {
@@ -124,8 +129,29 @@ public class Main {
         // [Pickle, Bun, Mayonnaise, Baron-Sauce, Lettuce, Tomato, Onions, Beef, Mozzarella, Beef, Mushrooms, Mustard, Ketchup, Bun]
         parseLine("Single Burger with Veggies but no Lettuce");
         // [Pickle, Bun, Tomato, Onions, Beef, Mushrooms, Bun]
-        parseLine("Double Chicken Burger with Ketchup Cheddar Onions and Mushrooms");
+        parseLine("Double Chicken Burger with Ketchup Cheddar Onions Mushrooms");
         // [Bun, Onions, Chicken, Cheddar, Chicken, Mushrooms, Ketchup, Bun]
+
+        Burger testBurger = new Burger(false);
+        System.out.println(testBurger.toString());
+        // [Bun, Beef, Bun]
+
+        testBurger.addPatty();
+        System.out.println(testBurger.toString());
+        // [Bun, Beef, Beef, Bun]
+
+        testBurger.addPatty();
+        System.out.println(testBurger.toString());
+        // [Bun, Beef, Beef, Beef, Bun]
+
+        testBurger.removePatty();
+        System.out.println(testBurger.toString());
+        // [Bun, Beef, Beef, Bun]
+
+        testBurger.removePatty();
+        System.out.println(testBurger.toString());
+        // [Bun, Beef, Bun]
+
 
         // [Pickle, Bun, Mayonnaise, Baron-Sauce, Lettuce, Tomato, Onions, Beef, Pepperjack, Mozzarella, Cheddar, Beef, Mushrooms, Mustard, Ketchup, Bun]
         // [Bun, Onions, Chicken, Chicken, Pepperjack, Mozzarella, Chicken, Bun]
@@ -134,7 +160,13 @@ public class Main {
         // [Pickle, Bun, Mayonnaise, Baron-Sauce, Lettuce, Tomato, Onions, Beef, Mozzarella, Beef, Mushrooms, Mustard, Ketchup, Bun]
         // [Pickle, Bun, Tomato, Onions, Beef, Mushrooms, Bun]
         // [Bun, Onions, Chicken, Cheddar, Chicken, Mushrooms, Ketchup, Bun]
+        // [Bun, Beef, Bun]
+        // [Bun, Beef, Beef, Bun]
+        // [Bun, Beef, Beef, Beef, Bun]
+        // [Bun, Beef, Beef, Bun]
+        // [Bun, Beef, Bun]
 
+        System.out.println();
     }
 
 }
