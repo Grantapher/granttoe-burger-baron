@@ -1,0 +1,11 @@
+Processing Order 0: Triple Veggie Burger with Cheese but no Mozzarella
+[Bun, Veggie, Veggie, Pepperjack, Cheddar, Veggie, Bun]
+
+Processing Order 1: Double Baron Burger with no Cheese but Pepperjack
+[Pickle, Bun, Mayonnaise, Baron-Sauce, Lettuce, Tomato, Onions, Beef, Pepperjack, Beef, Mushrooms, Mustard, Ketchup, Bun]
+
+Processing Order 2: Burger with Cheese Sauce Veggies but Cheddar Mustard Mushrooms
+[Pickle, Bun, Mayonnaise, Baron-Sauce, Lettuce, Tomato, Onions, Pepperjack, Mozzarella, Beef, Ketchup, Bun]
+
+Processing Order 3: Baron Burger with no Sauce Veggies Cheese but Pickle
+[Pickle, Bun, Beef, Bun]
